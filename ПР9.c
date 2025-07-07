@@ -2,19 +2,19 @@
 #include <math.h>
 
 int min_steps(int x, int y) {
-    int dist = y - x;
-    int step = 1;
-    int sum = 0;
-    int count = 0;
-
-    while (sum < dist) {
-        count++;
-        sum += step;
-        if (count % 2 == 0)
-            step++;
+    int d = y - x;
+    if (d == 0) return 0;
+    if (d == 1) return 1;
+    if (d == 2) return 2;
+    
+    int k = (int)sqrt(d);
+    if (k * k == d) {
+        return 2 * k - 1;
+    } else if (d - k * k <= k) {
+        return 2 * k;
+    } else {
+        return 2 * k + 1;
     }
-
-    return count;
 }
 
 int main() {
