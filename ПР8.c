@@ -2,29 +2,36 @@
 #include <string.h>
 #include <ctype.h>
 
-long long factorial(int n) {
-    long long res = 1;
-    for (int i = 2; i <= n; i++) res *= i;
-    return res;
+long long factorial(int num) {
+    long long result = 1;
+    for (int i = 2; i <= num; i++) {
+        result *= i;
+    }
+    return result;
 }
 
 int main() {
-    char word[15];
-    scanf("%14s", word); 
+    char word[15]; 
+    printf("Введіть слово: ");
+    scanf("%s", word);
 
-    int count[256] = {0};
-    int len = strlen(word);
+    int length = strlen(word);
+    int frequency[26] = {0}; 
 
-    for (int i = 0; i < len; i++) {
-        word[i] = toupper(word[i]);
-        count[(int)word[i]]++;
+    for (int i = 0; i < length; i++) {
+        char c = tolower(word[i]);
+        frequency[c - 'a']++;
     }
 
-    long long total = factorial(len);
-    for (int i = 0; i < 256; i++) {
-        if (count[i] > 1) total /= factorial(count[i]);
+    long long denominator = 1;
+    for (int i = 0; i < 26; i++) {
+        if (frequency[i] > 1) {
+            denominator *= factorial(frequency[i]);
+        }
     }
 
-    printf("%lld\n", total);
+    long long result = factorial(length) / denominator;
+    printf("Кількість анаграм: %lld\n", result);
+
     return 0;
 }
